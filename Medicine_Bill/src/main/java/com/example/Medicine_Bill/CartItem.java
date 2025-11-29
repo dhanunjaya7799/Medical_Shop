@@ -15,7 +15,6 @@ public class CartItem {
         this.total = (price * quantity) - discount;
     }
 
-    // Getters and Setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
@@ -31,3 +30,4 @@ public class CartItem {
     public double getTotal() { return total; }
     public void setTotal(double total) { this.total = total; }
 }
+
