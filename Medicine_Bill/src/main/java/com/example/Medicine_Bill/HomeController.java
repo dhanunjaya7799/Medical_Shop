@@ -46,7 +46,7 @@ public class HomeController {
         String sql = "INSERT INTO medicines (name, price, discount_rate, expiry_date) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, name, price, discount_rate, java.sql.Date.valueOf(expiry_date));
 
-        return "redirect:/"; // redirect to home page after saving
+        return "redirect:/"; 
     }
 
 
@@ -54,7 +54,6 @@ public class HomeController {
     public String addMedicine(@RequestParam("medicineName") String medicineName,
                               @RequestParam("quantity") int quantity) {
         try {
-            // ✅ Fetch medicine details from DB
             String sql = "SELECT price, expiry_date FROM medicines WHERE name = ?";
             Map<String, Object> medicine = jdbcTemplate.queryForMap(sql, medicineName);
 
@@ -63,7 +62,6 @@ public class HomeController {
             double total = price * quantity;
             double discountAmount = total * discountRate;
 
-            // ✅ Add to cart
             CartItem item = new CartItem(medicineName, quantity, price, discountAmount);
             cart.add(item);
 
@@ -71,7 +69,6 @@ public class HomeController {
             e.printStackTrace();
         }
 
-        // ✅ Redirect (PRG pattern) → prevents re-adding on refresh
         return "redirect:/";
     }
 
@@ -88,6 +85,7 @@ public class HomeController {
         model.addAttribute("totalQty", cart.stream().mapToInt(CartItem::getQuantity).sum());
         double subtotal = cart.stream().mapToDouble(CartItem::getTotal).sum();
         model.addAttribute("subtotal", subtotal);
-        return "bill"; // new bill.html page
+        return "bill"; 
     }
 }
+
